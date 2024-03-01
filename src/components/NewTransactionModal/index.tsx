@@ -1,19 +1,30 @@
 import * as Dialog from "@radix-ui/react-dialog";
-import { Content, Overlay, TransactionType, TransactionTypeButton } from "./styles";
+import { CloseButton, Content, Overlay, TransactionType, TransactionTypeButton } from "./styles";
 import { ArrowCircleUp, X } from "phosphor-react";
+import { useEffect } from "react";
 
 
 export function NewTransactionModal() {
+    useEffect(() => {
+        fetch('http://localhost:3000/transactions').then(response => {
+            console.log(response)
+        })
+    }, [])
+
+    fetch('http://localhost:3000/transactions').then(response => {
+        console.log(response)
+    })
+
     return (
         <Dialog.Portal>
         <Overlay />
 
         <Content>
-            <Dialog.Title>Nova transação</Dialog.Title>
-
-            <Dialog.Close>
+            <Dialog.Title>
+                Nova transação</Dialog.Title>
+            <CloseButton>
                 <X size={24}/>
-            </Dialog.Close> 
+            </CloseButton> 
 
             <form action="">
                 <input type="text" placeholder="Descrição" required/>
