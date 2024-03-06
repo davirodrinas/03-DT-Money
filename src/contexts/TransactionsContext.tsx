@@ -1,9 +1,10 @@
-import { Children, ReactNode, createContext, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
+import {createContext } from 'use-context-selector';
 import { api } from "../lib/axios";
 
 interface Transaction {
     id: number;
-    descriotion: string;
+    description: string;
     type: 'income' | 'outcome';
     price: number;
     category: string;
@@ -24,14 +25,14 @@ interface TransactionContextType {
 }
 
 interface TransactionsProvidesProps {
-    Children: ReactNode;
+    children: ReactNode;
 }
 
 
 
 export const TransactionsContext = createContext({} as TransactionContextType)
 
-export function TransactionsProvider({ Children }: TransactionsProvidesProps) {
+export function TransactionsProvider({ children }: TransactionsProvidesProps) {
     const [transactions, setTransactions] = useState<Transaction[]>([])
 
     async function fetchTransactions(query?: string) {
@@ -70,7 +71,7 @@ export function TransactionsProvider({ Children }: TransactionsProvidesProps) {
             fetchTransactions,    
             createTransaction,
         } }>
-            {Children}
+            {children}
         </TransactionsContext.Provider>
     )
 }
