@@ -2,13 +2,15 @@ import { Summary } from "../../components/Summary";
 import { Header } from "../../components/Header";
 import { PriceHighlight, TransactionsContainer, TransactionsTable } from "./styles";
 import { SearchForm } from "./components/SearchForm";
-import { useContext, useEffect, useState } from "react";
 import { TransactionsContext } from "../../contexts/TransactionsContext";
 import { dateFormatter, priceFormatter } from "../../utils/formatter";
+import { useContextSelector } from "use-context-selector";
 
 
 export function Transaction() {
-    const {transactions} = useContext(TransactionsContext)
+    const transactions = useContextSelector(TransactionsContext, (context) => {
+        return context.transactions
+    })
 
     return (
         <div>
@@ -22,7 +24,7 @@ export function Transaction() {
                         {transactions.map(transaction => {
                             return (
                                 <tr key={transaction.id}>
-                            <td width="50%">{transaction.descriotion}</td>
+                            <td width="50%">{transaction.description}</td>
                             <td>
                                 <PriceHighlight variant={transaction.type}>
                                     {transaction.type == 'outcome' && '- '}
